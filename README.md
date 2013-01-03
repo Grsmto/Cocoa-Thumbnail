@@ -21,4 +21,4 @@ It generates thumbnails depending on the mask you specified (a jpg file, mask ex
 
 ## What it doesn't do
 
-Don't you it if you want to generate tons of thumbnails. It is a heavy function so it will only fit with specifics scenarios (was usefull in my case).
+Don't use it if you want to generate tons of thumbnails. It is a heavy function so it will only fit with specifics scenarios (was usefull in my case).
