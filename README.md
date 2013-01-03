@@ -17,4 +17,8 @@ It generates thumbnails depending on the mask you specified (a jpg file, mask ex
 2. Import `UIImage+Thumbnail.h` in the class you want to use it
 3. Finally use it like this : 
 
-    UIImage *thumbnail = [UIImage createThumbnailFromFile:@"image.jpg" withWidth:300 usingMask:mask];
+`UIImage *thumbnail = [UIImage createThumbnailFromFile:@"image.jpg" withWidth:300 usingMask:mask];`
+
+## What it doesn't do
+
+Don't you it if you want to generate tons of thumbnails. It is a heavy function so it will only fit with specifics scenarios (was usefull in my case).
