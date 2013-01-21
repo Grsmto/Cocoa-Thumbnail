@@ -19,10 +19,7 @@ It generates thumbnails depending on the mask you specified (a jpg file, mask ex
 
 `UIImage *thumbnail = [UIImage createThumbnailFromFile:@"image.jpg" withWidth:300 usingMask:mask];`
 
-## What it doesn't do
-
-Don't use it if you want to generate tons of thumbnails. It is a heavy function so it will only fit with specifics scenarios (was usefull in my case).
-You will probably have to use multi threading if you want to generate thumbnails "on the go". This category perfectly works in a loop as follow :
+You will probably have to use multi threading if you want to generate thumbnails "on the go" without blocking UI. It perfectly works in a loop as follow :
 
 	NSOperationQueue *emailsQueue = [[NSOperationQueue alloc] init];
     
@@ -37,3 +34,7 @@ You will probably have to use multi threading if you want to generate thumbnails
 	    }];
 	    
 	}];
+
+## What it doesn't do
+
+Don't use it if you want to generate tons of thumbnails. It is a heavy function so it will only fit with specifics scenarios (was usefull in my case).
