@@ -24,10 +24,9 @@ It generates thumbnails depending on the mask you specified (a jpg file, mask ex
 Don't use it if you want to generate tons of thumbnails. It is a heavy function so it will only fit with specifics scenarios (was usefull in my case).
 You will probably have to use multi threading if you want to generate thumbnails "on the go". This category perfectly works in a loop as follow :
 
-NSOperationQueue *emailsQueue = [[NSOperationQueue alloc] init];
+	NSOperationQueue *emailsQueue = [[NSOperationQueue alloc] init];
     
-// Add an operation as a block to a queue (second thread)
-`
+	// Add an operation as a block to a queue (second thread)
 	[emailsQueue addOperationWithBlock: ^ {
 
 	    UIImage *thumbnail = [UIImage createThumbnailFromFile:fileName withWidth:310 usingMask:_mask];
@@ -38,4 +37,3 @@ NSOperationQueue *emailsQueue = [[NSOperationQueue alloc] init];
 	    }];
 	    
 	}];
-`
