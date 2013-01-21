@@ -125,6 +125,9 @@
     
     CGImageRelease(mask);
     CGImageRelease(maskedImageRef);
+    CGContextRelease(ctxWithAlpha);
+    CGImageRelease(imageWithAlpha);
+    CGColorSpaceRelease(cs);
     
     return maskedImage;
 }
