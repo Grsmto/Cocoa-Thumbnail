@@ -27,13 +27,15 @@ You will probably have to use multi threading if you want to generate thumbnails
 NSOperationQueue *emailsQueue = [[NSOperationQueue alloc] init];
     
 // Add an operation as a block to a queue (second thread)
-`[emailsQueue addOperationWithBlock: ^ {
+`
+	[emailsQueue addOperationWithBlock: ^ {
 
-    UIImage *thumbnail = [UIImage createThumbnailFromFile:fileName withWidth:310 usingMask:_mask];
+	    UIImage *thumbnail = [UIImage createThumbnailFromFile:fileName withWidth:310 usingMask:_mask];
 
-    // Get hold of main queue (main thread)
-    [[NSOperationQueue mainQueue] addOperationWithBlock: ^ {
-        [image setImage:thumbnail];
-    }];
-    
-}];`
+	    // Get hold of main queue (main thread)
+	    [[NSOperationQueue mainQueue] addOperationWithBlock: ^ {
+	        [image setImage:thumbnail];
+	    }];
+	    
+	}];
+`
