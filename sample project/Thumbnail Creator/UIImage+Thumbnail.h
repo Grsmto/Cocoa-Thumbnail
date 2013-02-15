@@ -12,4 +12,8 @@
 
 + (UIImage*)createThumbnailFromFile:(NSString*)fileName withWidth:(int)width usingMask:(UIImage*)mask;
 + (UIImage*)createThumbnailFromFile:(NSString*)fileName withWidth:(int)width;
+
++ (UIImage*)createThumbnailFromFile:(NSString*)fileName withHeight:(int)height usingMask:(UIImage*)mask;
++ (UIImage*)createThumbnailFromFile:(NSString*)fileName withHeight:(int)height;
+
 @end

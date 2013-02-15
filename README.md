@@ -3,7 +3,7 @@ Cocoa-Thumbnail
 
 Create thumbnails from external images on iOS
 
-If you want to be able to create thumbnails from remote images files directly on your application, instead of generating thumbnails from remote, this is for you.
+If you want to be able to create thumbnails from remote images files directly on your application (client side), instead of generating thumbnails from server, this is for you.
 It can create, for example, rounded corner thumbnails.
 You will need to process to the download of the images manually (images will need to be in application cache or in bundle to use the thumbnail function).
 
@@ -38,3 +38,9 @@ You will probably have to use multi threading if you want to generate thumbnails
 ## What it doesn't do
 
 Don't use it if you want to generate tons of thumbnails. It is a heavy function so it will only fit with specifics scenarios (was usefull in my case).
+
+
+## Changes
+
+### 1.1
+- Added support for different ratio images. Now you can use `createThumbnailFromFile:withHeight:` depending on the original image and thumbnail ratios.

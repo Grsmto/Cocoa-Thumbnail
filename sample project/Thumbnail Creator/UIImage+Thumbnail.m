@@ -38,6 +38,34 @@
     return image;
 }
 
++ (UIImage*)createThumbnailFromFile:(NSString*)fileName withHeight:(int)height usingMask:(UIImage*)mask {
+    UIImage* image;
+    NSString* thumbFileName;
+    double scaleFactor = [UIScreen mainScreen].scale;
+    
+    if (scaleFactor == 2.0)
+        thumbFileName = [NSString stringWithFormat:@"%@-%i@2x.png", [fileName stringByDeletingPathExtension], height];
+    else
+        thumbFileName = [NSString stringWithFormat:@"%@-%i.png", [fileName stringByDeletingPathExtension], height];
+    
+    NSString* localImageUrl = [[self getDocumentsDirectory] stringByAppendingFormat:@"/%@", thumbFileName];
+    
+    image = [self loadImageWithName:thumbFileName];
+    
+    if (image == Nil) {
+        UIImage *rawImage = [self loadImageWithName:fileName];
+        UIImage *resizedImage = [self imageWithImage:rawImage scaledToHeight:height];
+        
+        image = [self maskImage:resizedImage withMask:mask];
+        
+        [UIImagePNGRepresentation(image) writeToFile:[[self getDocumentsDirectory] stringByAppendingFormat:@"/%@", thumbFileName] atomically:YES];
+        
+        image = [UIImage imageWithContentsOfFile:localImageUrl];
+    }
+    
+    return image;
+}
+
 + (UIImage*)createThumbnailFromFile:(NSString*)fileName withWidth:(int)width {
     UIImage* image;
     NSString* thumbFileName;
@@ -72,6 +100,40 @@
     return image;
 }
 
++ (UIImage*)createThumbnailFromFile:(NSString*)fileName withHeight:(int)height {
+    UIImage* image;
+    NSString* thumbFileName;
+    NSString* fileType = [fileName pathExtension];
+    double scaleFactor = [UIScreen mainScreen].scale;
+    
+    if (scaleFactor == 2.0)
+        thumbFileName = [NSString stringWithFormat:@"%@-%i@2x.%@", [fileName stringByDeletingPathExtension], height, fileType];
+    else
+        thumbFileName = [NSString stringWithFormat:@"%@-%i.%@", [fileName stringByDeletingPathExtension], height, fileType];
+    
+    NSString* localImageUrl = [[self getDocumentsDirectory] stringByAppendingFormat:@"/%@", thumbFileName];
+    
+    image = [self loadImageWithName:thumbFileName];
+    
+    if (image == Nil) {
+        UIImage *rawImage = [self loadImageWithName:fileName];
+        image = [self imageWithImage:rawImage scaledToHeight:height];
+        
+        if ([fileType isEqualToString:@"jpg"]) {
+            [UIImageJPEGRepresentation(image, 1.0) writeToFile:[[self getDocumentsDirectory] stringByAppendingFormat:@"/%@", thumbFileName] atomically:YES];
+        } else if ([fileType isEqualToString:@"jpeg"]) {
+            [UIImagePNGRepresentation(image) writeToFile:[[self getDocumentsDirectory] stringByAppendingFormat:@"/%@", thumbFileName] atomically:YES];
+        } else {
+            [UIImagePNGRepresentation(image) writeToFile:[[self getDocumentsDirectory] stringByAppendingFormat:@"/%@", thumbFileName] atomically:YES];
+        }
+        
+        
+        image = [UIImage imageWithContentsOfFile:localImageUrl];
+    }
+    
+    return image;
+}
+
 + (UIImage *)imageWithImage:(UIImage *)image scaledToWidth:(float)i_width {
     float oldWidth = image.size.width;
     
@@ -79,11 +141,32 @@
     
     if (screenScaleFactor == 2.0)
         i_width = i_width*2;
-        
+    
     float scaleFactor = i_width / oldWidth;
     
     float newHeight = image.size.height * scaleFactor;
     float newWidth = oldWidth * scaleFactor;
+    
+    UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight));
+    [image drawInRect:CGRectMake(0, 0, newWidth, newHeight)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+
++ (UIImage *)imageWithImage:(UIImage *)image scaledToHeight:(float)i_height {
+    float oldHeight = image.size.height;
+    
+    double screenScaleFactor = [UIScreen mainScreen].scale;
+    
+    if (screenScaleFactor == 2.0)
+        i_height = i_height*2;
+    
+    float scaleFactor = i_height / oldHeight;
+    
+    float newWidth = image.size.width * scaleFactor;
+    float newHeight = oldHeight * scaleFactor;
     
     UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight));
     [image drawInRect:CGRectMake(0, 0, newWidth, newHeight)];
